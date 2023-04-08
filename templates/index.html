@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heat Index Pace Adjustment App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      a {
+        color: #0077cc;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      .cta {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .cta a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #0077cc;
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+
+      .cta a:hover {
+        background-color: #005ea3;
+      }
+
+      .social {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .social a {
+        display: inline-block;
+        margin: 0 10px;
+        color: #0077cc;
+        text-decoration: none;
+        font-size: 24px;
+      }
+
+      .social a:hover {
+        text-decoration: underline;
+      }
+
+      .social i {
+        vertical-align: middle;
+      }
+    </style>
+    <script>
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      }
+
+      function showPosition(position) {
+        document.getElementById("location").value = position.coords.latitude + ", " + position.coords.longitude;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Heat Index Pace Adjustment App</h1>
+      <p>Enter your location and the planned date and time of your run to get a pace adjustment based on the weather forecast.</p>
+      <form method="post" action="/">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="Enter your location" required>
+        <button type="button" onclick="getLocation()">Use My Location</button>
+        <br>
+        <label for="datetime">Date and Time of planned run:</label>
+        <input type="datetime-local" id="datetime" name="datetime" required>
+        <br>
+        <!-- <label for="is_elite_runner">Are you an elite athlete?</label>
+        <p>
+        <input type="radio" name="yes_no" >Yes</input>
+        </p>
+        <p>
+        <input type="radio" name="yes_no" checked>No</input>
+        </p>
+        <br> -->
+        <button type="submit">Get Pace Adjustment</button>
+      </form>
+      {% if pace_adjustment %}
+      <p>It will be {{ temp }} degrees with {{ humidity }}% humidity in {{ location }} at {{ date }}.</p>
+      <p>The forecast heat index at that time is {{ heat_index }}.</p>
+      <p>Based on the heat index, we recommend a pace adjustment of {{ pace_adjustment }}.</p>
+      {% endif %}
+      <div class="cta">
+        <a href="https://www.buymeacoffee.com/h9aq9muuYz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+      <div>
+      <iframe src="https://funsizedatabytes.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
+      <div class="social">
+        <a href="https://github.com/JessicaRudd" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/jmrudd/" target="_blank"><i class="fab fa-linkedin"></i></a>
+       <div>
