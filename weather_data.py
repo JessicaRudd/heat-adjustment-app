@@ -1,5 +1,7 @@
 import os
 import requests
+from datetime import datetime
+import time
 
 
 class WeatherData:
@@ -25,19 +27,23 @@ class WeatherData:
                 api_key = os.environ['GOOGLE_MAPS_API_KEY']
                 geocode_url = f'https://maps.googleapis.com/maps/api/geocode/json?address={self.location}&key={api_key}'
                 response = requests.get(geocode_url)
-                lat = response.json()['results'][0]['geometry']['location']['lat']
-                lon = response.json()['results'][0]['geometry']['location']['lng']
+
+                lat = response.json()['results'][0]["geometry"]["location"]["lat"]
+                lon = response.json()['results'][0]["geometry"]["location"]["lng"]
                 
                 return lat, lon
             
 
     def get_weather_data(self):
-        api_key = os.environ.get("OPENWEATHER_API")
-
+        api_key = os.environ.get("OPENWEATHERMAP_API_KEY")
         lat, lon = self._get_geocode_location()
-        dt = int(self.date.timestamp())
-        url = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,daily&appid={api_key}&units=imperial"
+        # dt = time.mktime(datetime.strptime(self.date, "%Y-%m-%dT%H:%M:%S+%f").timetuple())
+        dt = datetime.fromisoformat(str(self.date)).timetuple()
+        dt = time.mktime(dt)
+        # dt = datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S+%f").timetuple()
+        url = f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=current,minutely,daily,alerts&appid={api_key}&units=imperial'
         response = requests.get(url)
+
         if response.status_code == 200:
             data = response.json()
             hourly_data = data["hourly"]
@@ -55,4 +61,16 @@ class WeatherData:
 
             return feels_like, temp, humidity
         else:
-            return None
+            return None, None, None
+        
+if __name__ == '__main__':
+
+    import json
+     
+    w = WeatherData("Atlanta", "2023-04-08T21:11:21+0000")
+    # lat, lon = w._get_geocode_location()
+    # print(lat, lon)
+
+    feels_like, temp, humidity = w.get_weather_data()
+
+    print(feels_like, temp, humidity)

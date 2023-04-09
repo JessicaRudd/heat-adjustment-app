@@ -44,7 +44,8 @@ class HeatIndexPaceAdjustment:
 
         :return: Pace adjustment in seconds per kilometer.
         """
-        HI = self.heat_index()
+        HI = self.heat_index
+
         if HI is not None:
             if HI >= 80:
                 pace_adjustment = "+30 seconds per mile"
@@ -60,3 +61,12 @@ class HeatIndexPaceAdjustment:
                 pace_adjustment = "-10 seconds per mile"
 
         return pace_adjustment
+    
+            
+if __name__ == '__main__':
+
+     
+    w = HeatIndexPaceAdjustment(90.5, False)
+
+    pace_adjustment = w.pace_adjustment()
+    print(pace_adjustment)
