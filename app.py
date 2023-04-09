@@ -1,7 +1,7 @@
 import threading
 import time
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from heat_index_pace_adjustment import HeatIndexPaceAdjustment
 from weather_data import WeatherData
 
