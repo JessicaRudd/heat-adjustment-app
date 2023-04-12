@@ -4,6 +4,10 @@ from datetime import datetime
 from flask import Flask, render_template, request
 from heat_index_pace_adjustment import HeatIndexPaceAdjustment
 from weather_data import WeatherData
+import os
+import logging
+
+logger = logging.root.getChild("app.py")
 
 app = Flask(__name__)
 cache = {}
@@ -44,10 +48,17 @@ def index():
             w = WeatherData(location, date)
             forecast_heat_index, forecast_temp, forecast_humidity = w.get_weather_data()
 
+            logger.info(f"Heat index = {forecast_heat_index}")
+            logger.info(f"Forecast temp = {forecast_temp}")
+            logger.info(f"Forecast humidity = {forecast_humidity}")
+
             # Calculate the pace adjustment using the HeatIndexPaceAdjustment class
             is_elite_runner = request.form.get('is_elite_runner', False)  # default to non-elite runner
+            logger.info(f"Is Elite Runner? = {is_elite_runner}")
+
             h = HeatIndexPaceAdjustment(forecast_heat_index, is_elite_runner)
             pace_adjustment = h.pace_adjustment()
+            logger.info(f"Recommended pace adjustment = {pace_adjustment}")
 
             cache[key] = (forecast_heat_index, pace_adjustment, time.time())
 
@@ -63,4 +74,5 @@ if __name__ == '__main__':
     t.start()
 
     # Start Flask app
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)

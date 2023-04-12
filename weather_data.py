@@ -14,9 +14,8 @@ class WeatherData:
         """
         Initializes the HeatIndexPaceAdjustment object with the maximum temperature, humidity, and whether the runner is elite.
 
-        :param max_temp: Maximum temperature in Celsius.
-        :param humidity: Relative humidity as a percentage.
-        :param is_elite: True if the runner is elite, False otherwise.
+        :param location: Location as a string zip, address, city, coordinates
+        :param date: iso format date string
         """
         self.location = location
         self.date = date
@@ -40,7 +39,7 @@ class WeatherData:
         # dt = time.mktime(datetime.strptime(self.date, "%Y-%m-%dT%H:%M:%S+%f").timetuple())
         dt = datetime.fromisoformat(str(self.date)).timetuple()
         dt = time.mktime(dt)
-        # dt = datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S+%f").timetuple()
+
         url = f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=current,minutely,daily,alerts&appid={api_key}&units=imperial'
         response = requests.get(url)
 
@@ -67,7 +66,7 @@ if __name__ == '__main__':
 
     import json
      
-    w = WeatherData("Atlanta", "2023-04-08T21:11:21+0000")
+    w = WeatherData("Atlanta", "2023-04-13T21:11:21+0000")
     # lat, lon = w._get_geocode_location()
     # print(lat, lon)
 
