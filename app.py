@@ -74,5 +74,5 @@ if __name__ == '__main__':
     t.start()
 
     # Start Flask app
-    port = int(os.environ.get('PORT', 5001))
+    port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
