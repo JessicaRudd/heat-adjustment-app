@@ -1,68 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
+<head>
+  <title>Heat Index Pace Adjustment</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-    <title>Heat Index Pace Adjustment App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        background-color: #f0f0f0;
-        padding: 20px;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        font-weight: bold;
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-
-      p {
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-
-      a {
-        color: #0077cc;
-        text-decoration: none;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      }
-
-      .cta {
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+    .cta {
         margin-top: 20px;
         text-align: center;
-      }
+    }
 
-      .cta a:hover {
-        background-color: #005ea3;
-      }
+    .cta a:hover {
+      background-color: #005ea3;
+    }
 
-      .social {
-        margin-top: 20px;
-        text-align: center;
-      }
+    .social {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-      .social a:hover {
-        text-decoration: underline;
-      }
-
-    </style>
-    <script>
+    .social a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
       function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
@@ -75,29 +51,26 @@
         document.getElementById("location").value = position.coords.latitude + ", " + position.coords.longitude;
       }
     </script>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Heat Index Pace Adjustment App</h1>
-      <p>Enter your location and the planned date and time of your run to get a pace adjustment based on the weather forecast.</p>
-      <form method="post" action="/">
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" placeholder="Enter your location" required>
-        <button type="button" onclick="getLocation()">Use My Location</button>
-        <br>
-        <label for="datetime">Date and Time of planned run:</label>
-        <input type="datetime-local" id="datetime" name="datetime" required>
-        <br>
-        <!-- <label for="is_elite_runner">Are you an elite athlete?</label>
-        <p>
-        <input type="radio" name="yes_no" >Yes</input>
-        </p>
-        <p>
-        <input type="radio" name="yes_no" checked>No</input>
-        </p>
-        <br> -->
-        <button type="submit">Get Pace Adjustment</button>
-      </form>
+</head>
+<body>
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <h1 class="mb-4">Heat Index Pace Adjustment</h1>
+        <form method="post" action="/">
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Enter location (e.g. New York, NY)" required>
+            <br>
+            <button type="button" class="btn btn-primary" onclick="getLocation()">Use My Location</button>
+        	<br>
+          </div>
+          <div class="form-group">
+            <label for="datetime">Date and Time of planned run</label>
+            <input type="datetime-local" class="form-control" id="datetime" name="datetime" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Get Pace Adjustment</button>
+        </form>
       {% if pace_adjustment %}
       <p>It will be {{ temp }} degrees with {{ humidity }}% humidity in {{ location }} at {{ date }}.</p>
       <p>The forecast heat index at that time is {{ heat_index }}.</p>
@@ -106,4 +79,12 @@
       <div class="cta">
         <a href="https://www.buymeacoffee.com/h9aq9muuYz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
       <div>
+      <br>
         <div class="socializer a sr-32px sr-circle sr-opacity sr-icon-white sr-pad"><span class="sr-github sr-text-in"><a href="https://github.com/JessicaRudd" target="_blank" title="Github"><i class="fab fa-github"></i><span class="text">Github</span></a></span><span class="sr-linkedin sr-text-in"><a href="https://www.linkedin.com/in/jmrudd/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="text">LinkedIn</span></a></span><span class="sr-instagram sr-text-in"><a href="https://www.instagram.com/funsizeathlete/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i><span class="text">Instagram</span></a></span></div>
+
+
+
+  
+
+
+
