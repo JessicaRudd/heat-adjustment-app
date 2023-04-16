@@ -1,9 +1,11 @@
+import math
+
 class HeatIndexPaceAdjustment:
     """
     Calculates a running pace adjustment based on the heat index, taking into account whether the runner is elite or non-elite.
     """
 
-    def __init__(self, temp, dew_point, is_elite):
+    def __init__(self, temp, dew_point, pace_minutes, is_elite):
         """
         Initializes the HeatIndexPaceAdjustment object with the maximum temperature, humidity, and whether the runner is elite.
 
@@ -13,10 +15,16 @@ class HeatIndexPaceAdjustment:
         self.temp = temp
         self.dew_point = dew_point
         self.is_elite = is_elite
-        self.pace_adjust = None
+        self.pace_minutes = pace_minutes
+        self.adjustment = None
  
-    def _pace_calc():
-        pass
+    def _pace_calc(self, adjust):
+        adjust_decimal = adjust / 100
+        pace_add = self.pace_minutes * adjust_decimal
+        new_pace = math.modf(self.pace_minutes + pace_add)
+        minutes = int(new_pace[1])
+        seconds = int(new_pace[0]*60)
+        return minutes, seconds
 
     def pace_adjustment(self):
         """
@@ -25,62 +33,43 @@ class HeatIndexPaceAdjustment:
         :return: Pace adjustment in seconds per kilometer.
         """
 
-        adjust_metic = self.temp + self.dew_point
-        print(adjust_metic)
+        adjust_metic = int(self.temp) + int(self.dew_point)
+        # print(adjust_metic)
 
         if adjust_metic is not None:
             if adjust_metic <= 100:
                 pace_adjustment = "No pace adjustment needed"
             elif 100 < adjust_metic <= 110:
-                pace_adjustment = "0.5%"
+                self.adjustment = 0.5
             elif 110 < adjust_metic <= 120:
-                pace_adjustment = "1.0%"
+                self.adjustment = 1.0
             elif 120 < adjust_metic <= 130:
-                pace_adjustment = "1.5%"
+                self.adjustment = 1.5
             elif 130 < adjust_metic <= 140:
-                pace_adjustment = "2.5%"
+                self.adjustment = 2.5
             elif 140 < adjust_metic <= 150:
-                pace_adjustment = "4.0%"
+                self.adjustment = 4.0
             elif 150 < adjust_metic <= 160:
-                pace_adjustment = "5.5%"
+                self.adjustment = 5.5
             elif 160 < adjust_metic <= 170:
-                pace_adjustment = "7.0%"
+                self.adjustment = 7.0
             elif 170 < adjust_metic <= 180:
-                pace_adjustment = "9.0%"
+                self.adjustment = 9.0
             elif adjust_metic > 180:
                 pace_adjustment = "Hard running not recommended"
+
+            if self.adjustment is not None:
+                minutes, seconds = self._pace_calc(self.adjustment)
+                pace_adjustment = f"{minutes}:{seconds} minutes/miles"
+      
         else:
-            None
+            pace_adjustment = "Unable to calculate pace adjustment"
 
         return pace_adjustment
-
-        # HI = self.heat_index
-
-        # if HI is not None:
-        #     if HI >= 80:
-        #         pace_adjust = "+30 seconds per mile"
-        #     elif HI >= 75:
-        #         pace_adjust = "+20 seconds per mile"
-        #     elif HI >= 70:
-        #         pace_adjust = "+10 seconds per mile"
-        #     elif HI <= 40:
-        #         pace_adjust = "-30 seconds per mile"
-        #     elif HI <= 45:
-        #         pace_adjust = "-20 seconds per mile"
-        #     elif HI <= 50:
-        #         pace_adjust = "-10 seconds per mile"
-        #     else:
-        #         pace_adjust = "No pace adjustment needed"
-            
-        # else:
-        #     None
-
-        return pace_adjust
             
 if __name__ == '__main__':
 
      
-    w = HeatIndexPaceAdjustment(80.85, False)
-
-    pace_adjustment = w.pace_adjustment()
-    print(pace_adjustment)
+    w = HeatIndexPaceAdjustment(95, 90, 9.5, False)
+    pace = w.pace_adjustment()
+    print(pace)
