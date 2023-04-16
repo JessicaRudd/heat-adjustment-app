@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Heat Index Pace Adjustment</title>
+  <title> Heat Pace Planner </title>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -56,8 +56,8 @@
   <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-lg-6">
-        <h1 class="mb-4">Heat Index Pace Adjustment</h1>
-        <form method="post" action="/">
+        <h1 class="mb-4"><span>🏃🏽‍♀️</span>Heat Pace Planner <span>🥵</span></h1>
+        <form method="post" action="/result">
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" id="location" name="location" placeholder="Enter location (e.g. New York, NY)" required>
@@ -71,11 +71,11 @@
           </div>
           <button type="submit" class="btn btn-primary">Get Pace Adjustment</button>
         </form>
-      {% if pace_adjustment %}
+      <!-- {% if pace_adjustment %}
       <p>It will be {{ temp }} degrees with {{ humidity }}% humidity in {{ location }} at {{ date }}.</p>
       <p>The forecast heat index at that time is {{ heat_index }}.</p>
       <p>Based on the heat index, we recommend a pace adjustment of {{ pace_adjustment }}.</p>
-      {% endif %}
+      {% endif %} -->
       <div class="cta">
         <a href="https://www.buymeacoffee.com/h9aq9muuYz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
       <div>

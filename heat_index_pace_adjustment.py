@@ -13,30 +13,7 @@ class HeatIndexPaceAdjustment:
         self.heat_index = heat_index
         self.is_elite = is_elite
         self.pace_adjust = None
-
-
-    # def heat_index(self):
-    #     """
-    #     Calculates the heat index in Celsius using the maximum temperature and relative humidity.
-
-    #     :return: Heat index in Celsius.
-    #     """
-    #     c1 = -8.78469475556
-    #     c2 = 1.61139411
-    #     c3 = 2.33854883889
-    #     c4 = -0.14611605
-    #     c5 = -0.012308094
-    #     c6 = -0.0164248277778
-    #     c7 = 0.002211732
-    #     c8 = 0.00072546
-    #     c9 = -0.000003582
-
-    #     T = self.max_temp
-    #     R = self.humidity / 100.0
-
-    #     HI = c1 + (c2 * T) + (c3 * R) + (c4 * T * R) + (c5 * T * T) + (c6 * R * R) + (c7 * T * T * R) + (c8 * T * R * R) + (c9 * T * T * R * R)
-
-    #     return HI
+ 
 
     def pace_adjustment(self):
         """
@@ -61,17 +38,16 @@ class HeatIndexPaceAdjustment:
                 pace_adjust = "-10 seconds per mile"
             else:
                 pace_adjust = "No pace adjustment needed"
-
+            
         else:
             None
 
         return pace_adjust
-    
             
 if __name__ == '__main__':
 
      
-    w = HeatIndexPaceAdjustment(60.85, False)
+    w = HeatIndexPaceAdjustment(80.85, False)
 
     pace_adjustment = w.pace_adjustment()
     print(pace_adjustment)
