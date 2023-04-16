@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>Heat Pace Planner</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-zUp1r5r5z5J5Nhxq3Iw/35yVo1vEK8NPh5qiht/5Rfz5/T5rL8EaqjqmKTVw6mP7cJH8yWm7ENzXOiEWuQ7ZLQ==" crossorigin="anonymous" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .result-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      background-color: #fff;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .result-icon {
+      font-size: 3rem;
+      color: #007bff;
+    }
+    .support-link {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1.0rem;
+      color: blue;
+    }
+    .cta {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .cta a:hover {
+      background-color: #005ea3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="result-container text-center">
+          <i class="result-icon fas fa-thermometer-three-quarters mb-4"></i>
+          <h2 class="mb-4">Heat Index Pace Adjustment</h2>
+          <p class="h4">Your pace adjustment is: <span class="text-primary">{{ pace_adjustment }} </span></p>
+          <a href="/" class="btn btn-primary mt-4">Calculate another pace adjustment</a>
+          <a class="support-link"><i class="fas fa-mug-hot mr-2"></i>It takes time and resources ($) to build and maintain this app. If you like it, please support my work by buying me a coffee <span>😉🙏</span></a>
+          <div class="cta">
+        <a href="https://www.buymeacoffee.com/h9aq9muuYz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+      <div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>

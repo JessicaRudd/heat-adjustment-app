@@ -17,8 +17,6 @@ COPY weather_data.py .
 COPY templates templates/
 
 # Set environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
 ENV REDIS_HOST=redis
 ENV REDIS_PORT=6379
 

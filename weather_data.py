@@ -2,7 +2,9 @@ import os
 import requests
 from datetime import datetime
 import time
+import logging
 
+logging.basicConfig(level=logging.INFO)
 
 class WeatherData:
 
@@ -60,13 +62,14 @@ class WeatherData:
 
             return feels_like, temp, humidity
         else:
+            logging.info(f"API call failure. Response code {response.status_code}")
             return None, None, None
         
 if __name__ == '__main__':
 
     import json
      
-    w = WeatherData("Atlanta", "2023-04-13T21:11:21+0000")
+    w = WeatherData("Atlanta", "2023-04-17T21:11:21")
     # lat, lon = w._get_geocode_location()
     # print(lat, lon)
 
