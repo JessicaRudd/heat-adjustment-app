@@ -48,27 +48,28 @@ def index():
         else:
             app.logger.info("Getting new weather data")
             w = WeatherData(location, date)
-            forecast_heat_index, forecast_temp, forecast_humidity = w.get_weather_data()
+            forecast_heat_index, forecast_temp, forecast_humidity, dew_point = w.get_weather_data()
 
             app.logger.info(f"Heat index = {forecast_heat_index}")
             app.logger.info(f"Forecast temp = {forecast_temp}")
             app.logger.info(f"Forecast humidity = {forecast_humidity}")
+            app.logger.info(f"Forecast dew point = {dew_point}")
 
             # Calculate the pace adjustment using the HeatIndexPaceAdjustment class - may use later
             is_elite_runner = request.form.get('is_elite_runner', False)  # default to non-elite runner
             app.logger.info(f"Is Elite Runner? = {is_elite_runner}")
 
-            h = HeatIndexPaceAdjustment(forecast_heat_index, is_elite_runner)
+            h = HeatIndexPaceAdjustment(forecast_temp, dew_point, is_elite_runner)
             pace_adjustment = h.pace_adjustment()
             app.logger.info(f"Recommended pace adjustment = {pace_adjustment}")
 
-            cache[key] = (forecast_heat_index, pace_adjustment, time.time())
+            cache[key] = (forecast_temp, dew_point, time.time())
 
         return redirect('/result?pace_adjustment=' + str(pace_adjustment))
     else:
         return render_template('index.html')
 
-@app.route('/result', methods=['POST'])
+@app.route('/result', methods=['GET','POST'])
 def result():
     
     pace_adjustment = request.args.get('pace_adjustment')

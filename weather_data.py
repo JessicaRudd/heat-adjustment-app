@@ -59,11 +59,12 @@ class WeatherData:
             feels_like = closest_data["feels_like"]
             temp = closest_data["temp"]
             humidity = closest_data["humidity"]
+            dew_point = closest_data["dew_point"]
 
-            return feels_like, temp, humidity
+            return feels_like, temp, humidity, dew_point
         else:
             logging.info(f"API call failure. Response code {response.status_code}")
-            return None, None, None
+            return None, None, None, None
         
 if __name__ == '__main__':
 
@@ -73,6 +74,6 @@ if __name__ == '__main__':
     # lat, lon = w._get_geocode_location()
     # print(lat, lon)
 
-    feels_like, temp, humidity = w.get_weather_data()
+    feels_like, temp, humidity, dew_point = w.get_weather_data()
 
-    print(feels_like, temp, humidity)
+    print(feels_like, temp, humidity, dew_point)
