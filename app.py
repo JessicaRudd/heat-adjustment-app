@@ -7,7 +7,8 @@ from weather_data import WeatherData
 import os
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
+
 app = Flask(__name__)
 cache = {}
 expiration_time = 24 * 60 * 60
@@ -29,7 +30,6 @@ def remove_expired_entries():
             
         time.sleep(60 * 60) # Sleep for an hour
 
-# @app.route('/', methods=['GET', 'POST'])
 
 @app.route('/', methods=['GET','POST'])    
 def index():
@@ -39,36 +39,41 @@ def index():
         # Get the user's location from the request body
         location = request.form['location']
         date = datetime.fromisoformat(request.form['datetime'])
+        pace_min = request.form['r_pace_m']
+        pace_sec = request.form['r_pace_s']
+        pace = int(pace_min) + (int(pace_sec)/60)
         key = f"{location}-{date}"
 
         if key in cache:
             app.logger.info("Getting weather from cache")
-            forecast_heat_index, pace_adjustment = cache[key][:2]
+            forecast_temp, dew_point = cache[key][:2]
 
         else:
             app.logger.info("Getting new weather data")
             w = WeatherData(location, date)
-            forecast_heat_index, forecast_temp, forecast_humidity = w.get_weather_data()
+            forecast_heat_index, forecast_temp, forecast_humidity, dew_point = w.get_weather_data()
 
             app.logger.info(f"Heat index = {forecast_heat_index}")
             app.logger.info(f"Forecast temp = {forecast_temp}")
             app.logger.info(f"Forecast humidity = {forecast_humidity}")
+            app.logger.info(f"Forecast dew point = {dew_point}")
 
             # Calculate the pace adjustment using the HeatIndexPaceAdjustment class - may use later
             is_elite_runner = request.form.get('is_elite_runner', False)  # default to non-elite runner
             app.logger.info(f"Is Elite Runner? = {is_elite_runner}")
 
-            h = HeatIndexPaceAdjustment(forecast_heat_index, is_elite_runner)
+            # test with hardcoded pace minutes until update frontend
+            h = HeatIndexPaceAdjustment(forecast_temp, dew_point, pace, is_elite_runner)
             pace_adjustment = h.pace_adjustment()
-            app.logger.info(f"Recommended pace adjustment = {pace_adjustment}")
+            app.logger.info(pace_adjustment)
 
-            cache[key] = (forecast_heat_index, pace_adjustment, time.time())
+            cache[key] = (forecast_temp, dew_point, time.time())
 
-        return redirect('/result?pace_adjustment=' + str(pace_adjustment))
+        return redirect('/result?pace_adjustment=' + pace_adjustment)
     else:
         return render_template('index.html')
 
-@app.route('/result', methods=['POST'])
+@app.route('/result', methods=['GET','POST'])
 def result():
     
     pace_adjustment = request.args.get('pace_adjustment')

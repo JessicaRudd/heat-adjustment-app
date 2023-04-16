@@ -4,8 +4,6 @@ from datetime import datetime
 import time
 import logging
 
-logging.basicConfig(level=logging.INFO)
-
 class WeatherData:
 
     """
@@ -38,32 +36,34 @@ class WeatherData:
     def get_weather_data(self):
         api_key = os.environ.get("OPENWEATHERMAP_API_KEY")
         lat, lon = self._get_geocode_location()
-        # dt = time.mktime(datetime.strptime(self.date, "%Y-%m-%dT%H:%M:%S+%f").timetuple())
         dt = datetime.fromisoformat(str(self.date)).timetuple()
         dt = time.mktime(dt)
 
         url = f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=current,minutely,daily,alerts&appid={api_key}&units=imperial'
         response = requests.get(url)
 
-        if response.status_code == 200:
-            data = response.json()
-            hourly_data = data["hourly"]
-            closest_time_diff = float("inf")
-            closest_data = None
-            for hourly_datum in hourly_data:
-                hourly_dt = hourly_datum["dt"]
-                time_diff = abs(dt - hourly_dt)
-                if time_diff < closest_time_diff:
-                    closest_time_diff = time_diff
-                    closest_data = hourly_datum
-            feels_like = closest_data["feels_like"]
-            temp = closest_data["temp"]
-            humidity = closest_data["humidity"]
+        try:
+            if response.status_code == 200:
+                data = response.json()
+                hourly_data = data["hourly"]
+                closest_time_diff = float("inf")
+                closest_data = None
+                for hourly_datum in hourly_data:
+                    hourly_dt = hourly_datum["dt"]
+                    time_diff = abs(dt - hourly_dt)
+                    if time_diff < closest_time_diff:
+                        closest_time_diff = time_diff
+                        closest_data = hourly_datum
+                feels_like = closest_data["feels_like"]
+                temp = closest_data["temp"]
+                humidity = closest_data["humidity"]
+                dew_point = closest_data["dew_point"]
 
-            return feels_like, temp, humidity
-        else:
+                return feels_like, temp, humidity, dew_point
+        except Exception as e:
+
             logging.info(f"API call failure. Response code {response.status_code}")
-            return None, None, None
+            return e
         
 if __name__ == '__main__':
 
@@ -73,6 +73,6 @@ if __name__ == '__main__':
     # lat, lon = w._get_geocode_location()
     # print(lat, lon)
 
-    feels_like, temp, humidity = w.get_weather_data()
+    feels_like, temp, humidity, dew_point = w.get_weather_data()
 
-    print(feels_like, temp, humidity)
+    print(feels_like, temp, humidity, dew_point)

@@ -12,6 +12,23 @@
     .form-group {
       margin-bottom: 1.5rem;
     }
+     
+    .field-outer {
+      width: 48%;
+  	  flex-basis: calc(50% - 5px);
+     }
+    .field-items {
+      display: flex;
+      justify-content: space-between;
+
+    }
+    .field {
+      display: inline-block;
+      width: 32%;
+      flex-grow: 1;
+
+    }
+     
     .btn-primary {
       background-color: #007bff;
       border-color: #007bff;
@@ -57,7 +74,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <h1 class="mb-4"><span>🏃🏽‍♀️</span>Heat Pace Planner <span>🥵</span></h1>
-        <form method="post" action="/result">
+        <form method="post" action="/">
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" id="location" name="location" placeholder="Enter location (e.g. New York, NY)" required>
@@ -67,15 +84,24 @@
           </div>
           <div class="form-group">
             <label for="datetime">Date and Time of planned run</label>
-            <input type="datetime-local" class="form-control" id="datetime" name="datetime" required>
+            <input type="datetime-local" class="form-control" id="datetime" name="datetime" min="00:00" max="29:59" required>
           </div>
+          <div class="form-group">
+        <label for="r-pace-m" class="top-label">Running Pace:</label>
+        <div class="field-items">
+          <div class="field">
+            <input type="text" name="r_pace_m" id="r-pace-m" inputmode="numeric" pattern="[0-9]*" required>
+            <label for="r-pace-m">min</label>
+          </div><!--  /.field -->
+          <div class="field">
+            <input type="text" name="r_pace_s" id="r-pace-s" inputmode="numeric" pattern="[0-9]*" required>
+            <label for="r-pace-s">sec</label>
+          </div><!--  /.field -->
+        </div><!--  /.field-items -->
+      </div><!--  /.field-outer -->
+
           <button type="submit" class="btn btn-primary">Get Pace Adjustment</button>
         </form>
-      <!-- {% if pace_adjustment %}
-      <p>It will be {{ temp }} degrees with {{ humidity }}% humidity in {{ location }} at {{ date }}.</p>
-      <p>The forecast heat index at that time is {{ heat_index }}.</p>
-      <p>Based on the heat index, we recommend a pace adjustment of {{ pace_adjustment }}.</p>
-      {% endif %} -->
       <div class="cta">
         <a href="https://www.buymeacoffee.com/h9aq9muuYz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
       <div>
