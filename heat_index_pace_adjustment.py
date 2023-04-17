@@ -7,10 +7,12 @@ class HeatIndexPaceAdjustment:
 
     def __init__(self, temp, dew_point, pace_minutes, is_elite):
         """
-        Initializes the HeatIndexPaceAdjustment object with the maximum temperature, humidity, and whether the runner is elite.
+        Initializes the HeatIndexPaceAdjustment object with the forecast temperature, dewpoint, and whether the runner is elite.
 
-        :param humidity: Relative humidity as a percentage.
+        :param temp: int Temp (F).
+        :param dew_point: int dew point (F)
         :param is_elite: True if the runner is elite, False otherwise.
+        :param pace_minutes: int user input pace in minutes
         """
         self.temp = temp
         self.dew_point = dew_point
@@ -60,7 +62,7 @@ class HeatIndexPaceAdjustment:
 
             if self.adjustment is not None:
                 minutes, seconds = self._pace_calc(self.adjustment)
-                pace_adjustment = f"{minutes}:{seconds} minutes/miles"
+                pace_adjustment = f"{minutes}:{seconds:02d} minutes/miles"
       
         else:
             pace_adjustment = "Unable to calculate pace adjustment"
@@ -70,6 +72,6 @@ class HeatIndexPaceAdjustment:
 if __name__ == '__main__':
 
      
-    w = HeatIndexPaceAdjustment(95, 90, 9.5, False)
+    w = HeatIndexPaceAdjustment(70, 74, 9.75, False)
     pace = w.pace_adjustment()
     print(pace)
